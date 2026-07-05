@@ -32,3 +32,23 @@ hand.
 ## Docs
 
 <https://cohesivity.ai/llms.txt>
+
+## Updating this mirror (manual)
+
+This repo is a published mirror of the skill; the canonical source lives in
+`cohesivity-org/cohesivity` at `worker/src/skill/cohesivity.skill.md`. To ship a
+skill change:
+
+1. Edit the source, then regenerate: `node scripts/generate-skill.mjs`. This
+   stamps a new `version:` content hash and rewrites `skill-content.generated.js`.
+   Ship it through the normal PR + deploy flow so `cohesivity.ai/skill.md` serves it.
+2. Copy the generated markdown into **both** files in this repo, so the npm and
+   `skills`-CLI channels stay in lockstep:
+   - `cohesivity.skill.md` (pinned by the `@cohesivity/init` npm package)
+   - `skills/cohesivity/SKILL.md` (discovered by `npx skills add`)
+   Commit as `skill: publish generated skill (version <hash>)` and push.
+3. Bump `SKILL_PIN` in `@cohesivity/init/bin/cli.js` to this repo's new commit
+   SHA, then republish the npm package.
+
+Both files must carry the same content and `version:`. There is no automated
+sync yet, so this is a manual step per release.
