@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "cohesivity",
+  "description": "Cohesivity's agent-native backend infrastructure skill.",
+  "owner": {
+    "name": "Cohesivity",
+    "email": "accounts@cohesivity.ai"
+  },
+  "plugins": [
+    {
+      "name": "cohesivity",
+      "source": "./",
+      "description": "Provision databases, hosting, auth, storage, realtime, email, and AI APIs through Cohesivity.",
+      "homepage": "https://cohesivity.ai",
+      "repository": "https://github.com/cohesivity-org/cohesivity-skill",
+      "license": "MIT",
+      "keywords": [
+        "backend",
+        "infrastructure",
+        "database",
+        "hosting",
+        "auth",
+        "ai-agents"
+      ],
+      "category": "development"
+    }
+  ]
+}

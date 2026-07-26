@@ -15,6 +15,13 @@ With the [`skills`](https://github.com/vercel-labs/skills) CLI:
 npx skills add cohesivity-org/cohesivity-skill
 ```
 
+As a managed Claude Code plugin:
+
+```text
+/plugin marketplace add cohesivity-org/cohesivity-skill
+/plugin install cohesivity@cohesivity
+```
+
 Or set up a whole project (skill + a managed tenant + config) with the npm package:
 
 ```bash
@@ -26,6 +33,8 @@ npx @cohesivity/init
 - `skills/cohesivity/SKILL.md` — the skill, for the `skills` CLI.
 - `cohesivity.skill.md` — the same content at the path the `@cohesivity/init`
   package pins.
+- `.claude-plugin/` — the native Claude Code plugin and single-plugin
+  marketplace manifests.
 
 Both are generated from the canonical source and carry a `version:` content
 hash in their frontmatter. This repo is a published mirror; it is not edited by
