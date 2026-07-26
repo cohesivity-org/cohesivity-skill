@@ -1,5 +1,7 @@
 # Cohesivity agent skill
 
+[![skills.sh](https://skills.sh/b/cohesivity-org/cohesivity-skill)](https://skills.sh/cohesivity-org/cohesivity-skill)
+
 The agent playbook for [Cohesivity](https://cohesivity.ai): on-the-fly backend
 infrastructure purpose-built for AI agents. One HTTP API provisions databases,
 hosting, auth, realtime, storage, and AI model access, and the agent provisions
@@ -32,6 +34,16 @@ hand.
 ## Docs
 
 <https://cohesivity.ai/llms.txt>
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for private vulnerability reporting. Do not open
+a public issue for a suspected vulnerability or include live tenant credentials
+in a report.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
 
 ## Updating this mirror (manual)
 
