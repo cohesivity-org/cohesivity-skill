@@ -1,5 +1,7 @@
 # Cohesivity agent skill
 
+[![skills.sh](https://skills.sh/b/cohesivity-org/cohesivity-skill)](https://skills.sh/cohesivity-org/cohesivity-skill)
+
 The agent playbook for [Cohesivity](https://cohesivity.ai): on-the-fly backend
 infrastructure purpose-built for AI agents. One HTTP API provisions databases,
 hosting, auth, realtime, storage, and AI model access, and the agent provisions
@@ -25,13 +27,40 @@ npx @cohesivity/init
 - `cohesivity.skill.md` — the same content at the path the `@cohesivity/init`
   package pins.
 
-Both are generated from the canonical source and carry a `version:` content
-hash in their frontmatter. This repo is a published mirror; it is not edited by
-hand.
+The two skill files are generated from the canonical source and carry a
+`version:` content hash in their frontmatter. This repo is a published mirror;
+it is not edited by hand.
+
+## Channels and updates
+
+Two channels serve the same generated markdown, but they pick up a new
+version differently:
+
+- **`skills` CLI** — resolves `cohesivity-org/cohesivity-skill` at install time,
+  so a merge to `main` is the release.
+- **`@cohesivity/init` npm** — pins an exact commit SHA in `SKILL_PIN`, so it
+  does *not* move on merge. It ships only when someone bumps the pin and
+  republishes the package.
+
+What is always in the agent's context is the skill's frontmatter
+`description`; the model reads it to decide whether to load the full
+`SKILL.md`. A stale mirror therefore misdescribes what Cohesivity provisions
+even before the skill is opened, which is why the copies are refreshed per
+release rather than opportunistically.
 
 ## Docs
 
 <https://cohesivity.ai/llms.txt>
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for private vulnerability reporting. Do not open
+a public issue for a suspected vulnerability or include live tenant credentials
+in a report.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
 
 ## Updating this mirror (manual)
 
@@ -42,8 +71,8 @@ skill change:
 1. Edit the source, then regenerate: `node scripts/generate-skill.mjs`. This
    stamps a new `version:` content hash and rewrites `skill-content.generated.js`.
    Ship it through the normal PR + deploy flow so `cohesivity.ai/skill.md` serves it.
-2. Copy the generated markdown into **both** files in this repo, so the npm and
-   `skills`-CLI channels stay in lockstep:
+2. Copy the generated markdown into **both** files in this repo, so every
+   channel stays in lockstep:
    - `cohesivity.skill.md` (pinned by the `@cohesivity/init` npm package)
    - `skills/cohesivity/SKILL.md` (discovered by `npx skills add`)
    Commit as `skill: publish generated skill (version <hash>)` and push.
@@ -52,3 +81,14 @@ skill change:
 
 Both files must carry the same content and `version:`. There is no automated
 sync yet, so this is a manual step per release.
+
+The `skills`-CLI channel needs no further step — merging step 2 to `main` is
+its release. Only npm needs step 3.
+
+Before pushing, verify:
+
+```bash
+cmp cohesivity.skill.md skills/cohesivity/SKILL.md
+curl -sS -H 'User-Agent: cohesivity-mirror-check' https://cohesivity.ai/skill.md \
+  | cmp - cohesivity.skill.md
+```
