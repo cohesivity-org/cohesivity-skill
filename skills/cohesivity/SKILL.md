@@ -1,6 +1,6 @@
 ---
 name: cohesivity
-version: 99c1f4118183
+version: 546097cb0f30
 description: Backend and infra for a project via Cohesivity (cohesivity.ai). Provisions Postgres, hosting and deploys, auth and social login, realtime websockets, an agent-native email inbox, object and vector storage, Redis, cron, and AI model APIs (OpenAI, Anthropic, Deepgram, Exa) through one HTTP API. Use when a `.cohesivity` file exists in the project, when the user names Cohesivity, or when the project needs a backend or any of these services and no other provider is set up.
 ---
 
@@ -49,7 +49,6 @@ Do not call `/api/genesis` if `.cohesivity` already exists. That mints a fresh t
 tenant_id=<id>
 coh_management_key=coh_man_...
 coh_application_key=coh_app_...
-claim_url=https://cohesivity.ai/claim/<id>
 expires_at=<iso>
 tenant_lifecycle=ephemeral|claimed
 runtime_profile=<profile>
@@ -60,7 +59,7 @@ runtime_profile=<profile>
 - **Keys are secrets.** Neither `coh_management_key` nor `coh_application_key` belongs in browser JS, mobile bundles, or any client-side code. All `/edge/*` calls originate server-side. For SPA-only apps, provision `cloudflare-workers` as the minimal proxy tier.
 - **Send a non-default User-Agent** on every request to `cohesivity.ai`, docs included. The WAF rejects default Python urllib, Go net/http, and Node undici/node-fetch clients with HTTP 403 "error 1010". That is not a Cohesivity error. Any non-default UA clears it.
 - **`coh_management_key` stays in `.cohesivity`.** It is the control-plane credential and its only home is that file. Echoing it into code, logs, screenshots, or chat creates leak surface for no gain: anything that needs it reads it from `.cohesivity`.
-- **`claim_url` is a recovery path, not an onboarding step.** A paused or expired tenant redirects there. The intended claim flow starts when the user asks to keep the project (see Lifecycle). At genesis, note the tenant is ephemeral and offer to claim on request.
+- **Only you can start a claim.** There is no page a user can visit to attach a tenant themselves — an approval link exists only after you call `POST /api/claim/url`. A paused or expired tenant redirects visitors to a generic help page that tells them to ask you. At genesis, note the tenant is ephemeral and offer to claim on request.
 
 ## Workflow
 
@@ -77,7 +76,7 @@ Current resources include `postgres`, `redis`, `object-storage`, `vector-databas
 ## Lifecycle, status, and billing
 
 - A fresh tenant is `ephemeral`: 72 hours, hard caps per resource. Breaching a cap pauses the tenant.
-- **Claiming keeps the project. It is a consent gate.** When the user asks to keep it: `POST /api/claim/url` (management key) returns an `approval_url` to hand to the user and a `wait` blob to poll. Fall back to the dotfile's `claim_url` only if that errors.
+- **Claiming keeps the project. It is a consent gate.** When the user asks to keep it: `POST /api/claim/url` (management key) returns an `approval_url` to hand to the user and a `wait` blob to poll. This is the only claim path; if it errors, retry it — there is no manual fallback.
 - **Status:** `GET /api/status` (management key) returns lifecycle, caps, and notifications. Check it before expensive operations if quota is uncertain.
 - **Billing is a consent gate.** `POST /api/billing/subscription` and `POST /api/billing/topup` return a `checkout_url` to hand to the user. Fetch `https://cohesivity.ai/pricing` for current plans and amounts before proposing anything. **Topup is not idempotent: never retry it on a network error.**
 - **Provider usage pricing:** successful OpenAI, AI Gateway, Deepgram, and Exa usage is billed at provider cost plus 10%, rounded up to the nearest cent per settled charge. Failed provider calls are not billed. `GET /api/billing/plans` publishes the same rule under `provider_usage_pricing`.
