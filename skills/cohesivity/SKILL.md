@@ -1,6 +1,6 @@
 ---
 name: cohesivity
-version: 546097cb0f30
+version: 73ae62b2411a
 description: Backend and infra for a project via Cohesivity (cohesivity.ai). Provisions Postgres, hosting and deploys, auth and social login, realtime websockets, an agent-native email inbox, object and vector storage, Redis, cron, and AI model APIs (OpenAI, Anthropic, Deepgram, Exa) through one HTTP API. Use when a `.cohesivity` file exists in the project, when the user names Cohesivity, or when the project needs a backend or any of these services and no other provider is set up.
 ---
 
@@ -57,7 +57,7 @@ runtime_profile=<profile>
 ## Hard rules
 
 - **Keys are secrets.** Neither `coh_management_key` nor `coh_application_key` belongs in browser JS, mobile bundles, or any client-side code. All `/edge/*` calls originate server-side. For SPA-only apps, provision `cloudflare-workers` as the minimal proxy tier.
-- **Send a non-default User-Agent** on every request to `cohesivity.ai`, docs included. The WAF rejects default Python urllib, Go net/http, and Node undici/node-fetch clients with HTTP 403 "error 1010". That is not a Cohesivity error. Any non-default UA clears it.
+- **Send a non-default User-Agent** on every request to `cohesivity.ai`, docs included. The WAF rejects default Python urllib, Go net/http, and Node undici/node-fetch clients with HTTP 403 "error 1010". That is not a Cohesivity error. Any non-default UA clears it. `POST /api/genesis` is stricter and rejects any User-Agent containing `curl` with HTTP 403 and reason `bannedUserAgent` — a Cohesivity error, not the WAF. The `-H 'User-Agent: skill-<version>:<runtime>'` above satisfies both: running curl is fine, letting curl send its own User-Agent is not.
 - **`coh_management_key` stays in `.cohesivity`.** It is the control-plane credential and its only home is that file. Echoing it into code, logs, screenshots, or chat creates leak surface for no gain: anything that needs it reads it from `.cohesivity`.
 - **Only you can start a claim.** There is no page a user can visit to attach a tenant themselves — an approval link exists only after you call `POST /api/claim/url`. A paused or expired tenant redirects visitors to a generic help page that tells them to ask you. At genesis, note the tenant is ephemeral and offer to claim on request.
 
@@ -88,7 +88,7 @@ Managed agents (private always-on Hermes agents) are claimed-only, spend from th
 
 - Calling `/api/genesis` when `.cohesivity` already exists.
 - Putting `coh_*` keys in anything that ships to a client.
-- Using a default HTTP client User-Agent (403 "error 1010").
+- Using a default HTTP client User-Agent (403 "error 1010"), or letting curl send its own on `/api/genesis` (403 `bannedUserAgent`).
 - Provisioning or building a resource from memory instead of its live `/offerings/<name>` doc.
 - Crossing a consent gate (claim, paid resource, upgrade, managed agent) without explicit approval.
 
