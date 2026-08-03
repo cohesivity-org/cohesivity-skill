@@ -1,6 +1,6 @@
 ---
 name: cohesivity
-version: 4b74e894507c
+version: 8dae5cec7d60
 description: Backend and infra for a project via Cohesivity (cohesivity.ai). Provisions Postgres, hosting and deploys, auth and social login, realtime websockets, an agent-native email inbox, object and vector storage, Redis, cron, and AI model APIs (OpenAI, Anthropic, Deepgram, Exa) through one HTTP API. Use when a `.cohesivity` file exists in the project, when the user names Cohesivity, or when the project needs a backend or any of these services and no other provider is set up.
 ---
 
@@ -41,17 +41,17 @@ Run once per project, on user agreement, from the project root. Use an installer
 npx @cohesivity/init
 ```
 
-It detects your runtime on its own. Pass `--runtime <name>` (`claude-code`, `claude-web`, `codex`, `cursor`, `opencode`, `windsurf`, `hermes`, `openclaw`, `other`) when you want to name it explicitly, and `--dry-run` to see what it would do without changing anything.
+Pass `--dry-run` to see what it would do without changing anything.
 
 **Fallback — the quickstart script**, when Node is unavailable:
 
 ```bash
-curl -fsSL -H 'User-Agent: cold:<your-runtime>' https://cohesivity.ai/quickstart.sh | bash
+curl -fsSL https://cohesivity.ai/quickstart.sh | bash
 ```
 
-Set `<your-runtime>` to one of the names above. The `-H` flag is required: without it the tenant step is refused, because a User-Agent containing `curl` cannot create a tenant (see Hard rules).
-
 Both installers reuse an existing `.cohesivity` instead of creating a second tenant, so re-running them is safe. Do not hand-roll the underlying HTTP call — the installers carry the attribution and idempotency rules that make a bootstrap correct.
+
+**Do not fill in who you are.** Both installers measure attribution themselves, from the machine: the chain of processes that launched them names the harness, and the harness's own session log names the model. Anything they cannot infer they report as `none`. You do not need to know or state your runtime or model for a bootstrap, and `--runtime <name>` exists only to correct a measurement you know to be wrong.
 
 `.cohesivity` carries:
 
@@ -67,7 +67,7 @@ runtime_profile=<profile>
 ## Hard rules
 
 - **Keys are secrets.** Neither `coh_management_key` nor `coh_application_key` belongs in browser JS, mobile bundles, or any client-side code. All `/edge/*` calls originate server-side. For SPA-only apps, provision `cloudflare-workers` as the minimal proxy tier.
-- **Send a non-default User-Agent** on every request to `cohesivity.ai`, docs included. The WAF rejects default Python urllib, Go net/http, and Node undici/node-fetch clients with HTTP 403 "error 1010". That is not a Cohesivity error. Any non-default UA clears it. Tenant creation is stricter still: it refuses any User-Agent containing `curl` with HTTP 403 and reason `bannedUserAgent`, which is a Cohesivity error rather than the WAF. Both installers above send an accepted User-Agent for you — running curl is fine, letting curl send its own User-Agent is not.
+- **Send a non-default User-Agent** on every request to `cohesivity.ai`, docs included. The WAF rejects default Python urllib, Go net/http, and Node undici/node-fetch clients with HTTP 403 "error 1010". That is not a Cohesivity error. Any non-default UA clears it. Tenant creation is stricter still: it refuses any User-Agent containing `curl` with HTTP 403 and reason `bannedUserAgent`, which is a Cohesivity error rather than the WAF. Both installers send their own measured User-Agent, so this rule never applies to a bootstrap through them — including `curl … | bash`, where the script sets its own UA regardless of what fetched it. It applies to every other request you make by hand: running curl is fine, letting curl send its own User-Agent is not.
 - **`coh_management_key` stays in `.cohesivity`.** It is the control-plane credential and its only home is that file. Echoing it into code, logs, screenshots, or chat creates leak surface for no gain: anything that needs it reads it from `.cohesivity`.
 - **Only you can start a claim.** There is no page a user can visit to attach a tenant themselves — an approval link exists only after you call `POST /api/claim/url`. A paused or expired tenant redirects visitors to a generic help page that tells them to ask you. At bootstrap, note the tenant is ephemeral and offer to claim on request.
 
@@ -99,7 +99,8 @@ Managed agents (private always-on Hermes agents) are claimed-only, spend from th
 - Bootstrapping again when `.cohesivity` already exists — read it and reuse it.
 - Hand-rolling the bootstrap HTTP call instead of running `npx @cohesivity/init` or the quickstart script.
 - Putting `coh_*` keys in anything that ships to a client.
-- Using a default HTTP client User-Agent (403 "error 1010"), or letting curl send its own when creating a tenant (403 `bannedUserAgent`).
+- Using a default HTTP client User-Agent (403 "error 1010"), or letting curl send its own on a hand-rolled tenant-creation call (403 `bannedUserAgent`).
+- Stating your runtime or model to an installer instead of letting it measure them.
 - Provisioning or building a resource from memory instead of its live `/offerings/<name>` doc.
 - Crossing a consent gate (claim, paid resource, upgrade, managed agent) without explicit approval.
 
