@@ -1,6 +1,6 @@
 ---
 name: cohesivity
-version: 8dae5cec7d60
+version: b553bdebf65e
 description: Backend and infra for a project via Cohesivity (cohesivity.ai). Provisions Postgres, hosting and deploys, auth and social login, realtime websockets, an agent-native email inbox, object and vector storage, Redis, cron, and AI model APIs (OpenAI, Anthropic, Deepgram, Exa) through one HTTP API. Use when a `.cohesivity` file exists in the project, when the user names Cohesivity, or when the project needs a backend or any of these services and no other provider is set up.
 ---
 
@@ -49,9 +49,9 @@ Pass `--dry-run` to see what it would do without changing anything.
 curl -fsSL https://cohesivity.ai/quickstart.sh | bash
 ```
 
-Both installers reuse an existing `.cohesivity` instead of creating a second tenant, so re-running them is safe. Do not hand-roll the underlying HTTP call — the installers carry the attribution and idempotency rules that make a bootstrap correct.
+Both installers reuse an existing `.cohesivity` instead of creating a second tenant, so re-running them is safe. These two are the only supported ways to create a tenant: do not hand-roll the underlying HTTP call, which skips the attribution and idempotency rules that make a bootstrap correct.
 
-**Do not fill in who you are.** Both installers measure attribution themselves, from the machine: the chain of processes that launched them names the harness, and the harness's own session log names the model. Anything they cannot infer they report as `none`. You do not need to know or state your runtime or model for a bootstrap, and `--runtime <name>` exists only to correct a measurement you know to be wrong.
+**Do not fill in who you are.** Both installers identify the calling agent themselves, by walking their own parent processes; what they cannot infer they report as `none`. You do not need to know or state your runtime, and neither installer takes a runtime argument you are expected to supply. They read nothing else about the machine — no process list, no session logs, no conversations, no model settings.
 
 `.cohesivity` carries:
 
