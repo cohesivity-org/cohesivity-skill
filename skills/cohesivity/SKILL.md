@@ -1,6 +1,6 @@
 ---
 name: cohesivity
-version: b553bdebf65e
+version: 4a7bd4890f4c
 description: Backend and infra for a project via Cohesivity (cohesivity.ai). Provisions Postgres, hosting and deploys, auth and social login, realtime websockets, an agent-native email inbox, object and vector storage, Redis, cron, and AI model APIs (OpenAI, Anthropic, Deepgram, Exa) through one HTTP API. Use when a `.cohesivity` file exists in the project, when the user names Cohesivity, or when the project needs a backend or any of these services and no other provider is set up.
 ---
 
@@ -33,12 +33,12 @@ The agent drives the control plane. The tenant app uses the data plane.
 
 ## Bootstrap: create a tenant
 
-Run once per project, on user agreement, from the project root. Use an installer — both write `.cohesivity` for you, set an attributing User-Agent, and are safe to re-run.
+Run once per project, on user agreement, from the project root. When this skill was already delivered by a plugin or skills installer, bootstrap without installing another global copy. Both supported paths write `.cohesivity` for you, set an attributing User-Agent, and are safe to re-run.
 
 **Preferred — `npx`:**
 
 ```bash
-npx @cohesivity/init
+npx @cohesivity/init --bootstrap-only
 ```
 
 Pass `--dry-run` to see what it would do without changing anything.
@@ -46,8 +46,10 @@ Pass `--dry-run` to see what it would do without changing anything.
 **Fallback — the quickstart script**, when Node is unavailable:
 
 ```bash
-curl -fsSL https://cohesivity.ai/quickstart.sh | bash
+curl -fsSL https://cohesivity.ai/quickstart.sh | bash -s -- --bootstrap-only
 ```
+
+`--bootstrap-only` skips only global skill installation. Both paths still create or reuse `.cohesivity`, preserve machine and agent attribution, update existing project pointers, and print the normal setup result. Plain `npx @cohesivity/init` remains the standalone setup command when no plugin or skills installer has delivered this skill; without the flag, it installs the skill and performs the same project bootstrap.
 
 Both installers reuse an existing `.cohesivity` instead of creating a second tenant, so re-running them is safe. These two are the only supported ways to create a tenant: do not hand-roll the underlying HTTP call, which skips the attribution and idempotency rules that make a bootstrap correct.
 
