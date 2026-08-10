@@ -23,5 +23,5 @@ bootstrap flow, credential handling, or instructions served from
 
 Security fixes target the latest skill served at
 <https://cohesivity.ai/skill.md> and then propagate to this mirror. Compare the
-`version` field in the installed `SKILL.md` with the live version when reporting
-an issue.
+`metadata.version` field in the installed `SKILL.md` with the live version when
+reporting an issue.
