@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-09-17 — Remove MCP-required constraint for control-plane mutations
+
+The skill wrongly told agents they must route every control-plane mutation
+through an MCP tool and must not use direct HTTP even with user approval.
+That blocked agents without MCP from doing deployments, billing, feedback,
+and other operations the four MCP tools don't cover.
+
+The fix: MCP is preferred when available (for its built-in confirmation
+boundary), but direct HTTP with the management key is valid for any
+control-plane operation. The consent requirement — get explicit user
+authorization before any mutation — stays the same regardless of transport.
+
+Eight locations changed: precedence step 1, the supported-MCP-operations
+fallback paragraph, the hard-rules bullet, the workflow provisioning step,
+the railway-hosting deployment reference, two lifecycle/billing paragraphs,
+and two common-mistakes bullets.
+
 ## 2026-09-16 — Publish four-tool MCP handoff guidance
 
 Copy generated skill `d309e051978d` into both mirror paths. It enumerates the
