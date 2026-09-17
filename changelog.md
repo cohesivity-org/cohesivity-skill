@@ -45,3 +45,16 @@ Both files match the generated candidate: 20,265 bytes, SHA-256
 The body hash matches the metadata version, and 28 discovery/skill tests pass.
 This coordinates plugin 4.0.1 with unpublished initializer 0.8.0; no merge,
 publication, or deployment is performed here.
+
+## 2026-09-17 — Keep MCP sign-in independent of connection
+
+Publish generated skill ac6c3a29928f in both mirror paths. Connect automatically
+uses the existing browser account session or temporary guest access and never
+asks the user to choose whether to sign in. Local reuse skips optional saved
+account auth for valid project credentials. The coordinated fallback is
+initializer 0.8.1 with plugin 4.0.2; publish npm before merging this mirror.
+
+Both files match the canonical generated candidate: 20640 bytes, SHA-256
+`b7e11cecc8bb69b7346ebbb7f972faf297f408eb4ab4389e28491ad68e83a68a`. The body hash matches metadata.version and the
+canonical discovery, skill, and page regression tests pass. No runtime deploy
+is performed by this mirror commit.
