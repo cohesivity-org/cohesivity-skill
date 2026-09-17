@@ -30,3 +30,18 @@ SHA-256 `755f0fed995635cc722ea7ca0987b91e16749b5dcc3fe2a80ae0e540389005db`.
 The body hash matches `metadata.version`, and whitespace verification passes.
 This is coordinated release guidance for plugin 4.0.0 and initializer 0.8.0,
 not a claim that either candidate is published or the Worker is deployed.
+
+## 2026-09-17 — Hand hosted credentials to the calling agent
+
+Publish generated skill `c098834bea25` in both mirror paths. Hosted
+`create_tenant` now supplies `credentials_file` for the calling agent to write
+verbatim into a private, gitignored project file. Browser download is optional
+for clients without a writable workspace. The guidance explicitly covers
+retained tool history, existing-tenant protection, and reporting failed writes;
+local MCP remains metadata-only and other hosted results retain redaction.
+
+Both files match the generated candidate: 20,265 bytes, SHA-256
+`ccdc71a865d775709339869a1ae029f88a8f9d789e0cb6fde17e81fe60423d9c`.
+The body hash matches the metadata version, and 28 discovery/skill tests pass.
+This coordinates plugin 4.0.1 with unpublished initializer 0.8.0; no merge,
+publication, or deployment is performed here.
