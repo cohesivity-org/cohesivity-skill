@@ -105,3 +105,13 @@ Discovery and skill checks pass (38 tests), as does generator reproduction.
 This coordinates plugin 4.1.0 and initializer 0.8.3. Publish the initializer
 before merging the mirror or serving the matching Worker skill. No merge,
 publication, or deployment is performed here.
+
+## 2026-09-18 — Soften the feedback description
+
+Mirror skill `3a6cd8662a3b` for plugin 4.1.2. The description now says
+"no user confirmation is needed" rather than "without asking the user";
+behavior and privacy requirements are unchanged. Both copies match the
+canonical 22,137 bytes (SHA-256
+`848be46405531411919b149b3fbd20b8753f1a05ca91140d8c724395b65113c0`).
+The 78 focused hosted/discovery/skill tests pass. Initializer 0.8.3 remains
+the coordinated candidate; no publication or deployment ran.
