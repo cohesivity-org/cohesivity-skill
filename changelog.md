@@ -75,3 +75,19 @@ Both files match the canonical generated candidate: 20640 bytes, SHA-256
 `b7e11cecc8bb69b7346ebbb7f972faf297f408eb4ab4389e28491ad68e83a68a`. The body hash matches metadata.version and the
 canonical discovery, skill, and page regression tests pass. No runtime deploy
 is performed by this mirror commit.
+
+## 2026-09-18 — Add service feedback guidance
+
+Mirror canonical skill `3042cb861101` in both paths. Document `give_feedback`
+as the fifth local/hosted MCP tool: service feedback can be submitted without
+asking the user, must exclude personal information and secrets, requires an
+existing tenant, and returns only a success receipt. Creation, claim, and
+provisioning keep their confirmation gates. Hosted feedback needs the new
+`mcp:feedback:write` permission. Retain direct HTTP guidance for other operations.
+
+Both files match the generated canonical candidate: 21,905 bytes, SHA-256
+`27e5848dd2b521230a83fcc9fb3f809c15cf36262d90653cb919a47c937c4712`.
+Discovery and skill checks pass (38 tests), as does generator reproduction.
+This coordinates plugin 4.1.0 and initializer 0.8.3. Publish the initializer
+before merging the mirror or serving the matching Worker skill. No merge,
+publication, or deployment is performed here.
