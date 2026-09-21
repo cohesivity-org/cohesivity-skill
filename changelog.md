@@ -118,7 +118,7 @@ the coordinated candidate; no publication or deployment ran.
 
 ## 2026-09-18 — Stop volunteering wallet top-ups after a claim
 
-Mirror skill `aabb1d622180`. Claiming a tenant was being followed by an
+Mirror skill `fef5cc6c4e30`. Claiming a tenant was being followed by an
 unprompted payment menu — wallet top-up amounts, the hosted Razorpay
 checkout, and x402 self-pay — for a user who had only asked to keep their
 project. The live billing docs enumerate every rail because the API supports
@@ -126,15 +126,16 @@ them, which agents were reading as an instruction to present them.
 
 The skill now says otherwise in three places: the claim bullet ends the flow
 at "you own it, here is the URL", a new lifecycle bullet gates all billing
-talk behind an actual trigger (the user asks, the user authorizes a paid
-action, or a `402` / exhausted fluid / paused tenant / usage-limit error is
-blocking the work right now), and a common-mistakes entry names the post-claim
-pitch directly. Authorizing one paid action does not license pitching the
-next, and a blocked limit gets one named remediation rather than a menu.
+talk behind an actual trigger (the user asks, the user requests or authorizes
+a paid action, or a `402` / exhausted fluid / paused tenant / usage-limit
+error is blocking the work right now), and a common-mistakes entry names the
+post-claim pitch directly. Authorizing one paid action does not license
+pitching the next, and a blocked limit gets one named remediation rather than
+a menu.
 
 Consent gates, topup non-idempotency, and provider usage pricing are
 unchanged; this only governs when billing is raised, never how it is
-executed. Both mirror files are byte-identical: 23,358 bytes, SHA-256
-`06a7c31d8307f65e732545f0e667f332812bc11fc2cbd407e499e5308adfd03a`, and the
+executed. Both mirror files are byte-identical: 23,408 bytes, SHA-256
+`c5903bc513c4e70d92a13ef7cb3ddd1a46cb7fb2692d06405bb1d6f39343824e`, and the
 body hash matches `metadata.version`. No publication or deployment is
 performed by this mirror commit.
