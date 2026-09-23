@@ -139,3 +139,18 @@ executed. Both mirror files are byte-identical: 23,408 bytes, SHA-256
 `c5903bc513c4e70d92a13ef7cb3ddd1a46cb7fb2692d06405bb1d6f39343824e`, and the
 body hash matches `metadata.version`. No publication or deployment is
 performed by this mirror commit.
+
+## 2026-09-23 — Point the no-MCP fallback at initializer 0.8.6
+
+Mirror skill `2dd574dfb6fc`. The fallback for agents with no Cohesivity MCP
+still ran `npx --yes @cohesivity/init@0.8.3`, and the coordinated-release line
+still named plugin 4.1.2 and initializer 0.8.3, although init 0.8.5 and plugin
+4.1.3 had already shipped. Agents on that fallback installed an older plugin.
+Both install commands and the release line now name initializer 0.8.6 and
+plugin 4.1.4, which ship together with this commit (COH-294). No other text
+changes.
+
+Both mirror files are byte-identical: 23,408 bytes, SHA-256
+`a3bf2ae8379375a4c247acf09f5d78e1c2ebcf6b325d22f8ffbec562ccff6460`, and the
+body hash matches `metadata.version`. No publication or deployment is
+performed by this mirror commit.
