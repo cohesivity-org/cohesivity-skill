@@ -179,3 +179,17 @@ Both mirror files are byte-identical: 24,862 bytes, SHA-256
 `0114e33f413d69ec8d35953f517a66c2bfb71539106d139c2568a3aa59613ae2`, and the
 body hash matches `metadata.version`. No publication or deployment is
 performed by this mirror commit.
+
+## 2026-09-24 — Keep the legacy guest reconnect rule
+
+Mirror skill `8635569596a1`. The previous mirror (`b2348266273a`) dropped one
+fact while rewriting the hosted section: a legacy guest OAuth grant cannot
+reach its tenant after the tenant is claimed, so the client reconnects with the
+owning account. Older guest tokens still work, so the rule is restored in the
+optional sign-in paragraph. No other text changes. `b2348266273a` was never
+pinned by a released installer.
+
+Both mirror files are byte-identical: 25,001 bytes, SHA-256
+`7e6a2ba324a92bb6a98c700f79ff66fcb255dc8001e2ad61911ec26768f14f60`, and the
+body hash matches `metadata.version`. No publication or deployment is
+performed by this mirror commit.
