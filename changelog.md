@@ -154,3 +154,75 @@ Both mirror files are byte-identical: 23,408 bytes, SHA-256
 `a3bf2ae8379375a4c247acf09f5d78e1c2ebcf6b325d22f8ffbec562ccff6460`, and the
 body hash matches `metadata.version`. No publication or deployment is
 performed by this mirror commit.
+
+## 2026-09-24 — Teach the single public hosted MCP at /mcp
+
+Mirror skill `b2348266273a`. The hosted guidance still described an OAuth
+Connect flow that created guest identities, although hosted management became
+public by default in cohesivity#536, and the core change that ships with this
+mirror moves documentation and management onto one server at
+`https://cohesivity.ai/mcp` and retires `/mcp/manage` with HTTP 410 (Refs
+COH-296). The skill now describes public connection with no sign-in, confirmed
+`create_tenant` returning the `.cohesivity` contents, and `tenant_id` plus
+`coh_management_key` on public follow-ups, with the key-in-tool-history note.
+Account OAuth is described as optional: owned claimed creation, `tenant_id`
+only, scope-filtered tools, no reassignment of existing tenants, and 401 with
+no public fallback for bad tokens. Clients on `/mcp/manage` need the new URL,
+and signed-in clients sign in again. The hosted tool list adds the read-only
+`get_cohesivity_documentation`, public feedback inputs add the management key,
+the download URL is OAuth-only, and a local sign-in saved for the old endpoint
+needs `logout` then `login`. The installer fallback and release line name
+initializer 0.9.0 and plugin 5.0.0. Consent gates, billing rules, and
+credential protections are unchanged. The user approved this skill edit.
+
+Both mirror files are byte-identical: 24,862 bytes, SHA-256
+`0114e33f413d69ec8d35953f517a66c2bfb71539106d139c2568a3aa59613ae2`, and the
+body hash matches `metadata.version`. No publication or deployment is
+performed by this mirror commit.
+
+## 2026-09-24 — Keep the legacy guest reconnect rule
+
+Mirror skill `8635569596a1`. The previous mirror (`b2348266273a`) dropped one
+fact while rewriting the hosted section: a legacy guest OAuth grant cannot
+reach its tenant after the tenant is claimed, so the client reconnects with the
+owning account. Older guest tokens still work, so the rule is restored in the
+optional sign-in paragraph. No other text changes. `b2348266273a` was never
+pinned by a released installer.
+
+Both mirror files are byte-identical: 25,001 bytes, SHA-256
+`7e6a2ba324a92bb6a98c700f79ff66fcb255dc8001e2ad61911ec26768f14f60`, and the
+body hash matches `metadata.version`. No publication or deployment is
+performed by this mirror commit.
+
+## 2026-09-25 — Scope the hosted key to public calls; reuse account idempotency keys
+
+Mirror skill `1ea09c29c742`, approved by the user after Greptile review of
+PR #15. The hosted step said every follow-up tool takes `tenant_id` and
+`coh_management_key`; that holds only without sign-in, and a signed-in agent
+following it could put the secret key into tool inputs retained in client
+history. It now says signed-in calls take only `tenant_id`. Account creation
+takes an `idempotency_key`, but the skill did not say to keep it; it now says
+the key is chosen once and reused for a retry after an unclear outcome,
+because a fresh key can create a second durable tenant. No other text changes.
+
+Both mirror files are byte-identical: 25,301 bytes, SHA-256
+`44967c6cf60c8ee43e923fbc467d362a2dd4c7dc0f7a93d8b48ed1a9579f8f2c`, and the
+body hash matches `metadata.version`. No publication or deployment is
+performed by this mirror commit.
+
+## 2026-09-25 — Say that a signed-in connection reaches only account tenants
+
+Mirror skill `23874a7d4101`, approved by the user after Greptile review of
+cohesivity PR #537. The hosted step said signed-in calls take only
+`tenant_id`, which reads as if any tenant works that way. A signed-in
+connection reaches only tenants the account created or owns, and its tool
+schemas take no management key, so a tenant created without sign-in
+(public `create_tenant` or the installer) returns `tenant_not_available`
+there. The skill now says such a tenant stays on key-based access (a public
+connection or direct HTTP) until the user claims it, after which the account
+manages it by `tenant_id`. No other text changes.
+
+Both mirror files are byte-identical: 25,773 bytes, SHA-256
+`4dab14ccb96f6f2ad3edcf5d24bddc489c1372a28c917ed84f0af641d9ea8232`, and the
+body hash matches `metadata.version`. No publication or deployment is
+performed by this mirror commit.
