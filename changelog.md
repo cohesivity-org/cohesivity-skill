@@ -193,3 +193,19 @@ Both mirror files are byte-identical: 25,001 bytes, SHA-256
 `7e6a2ba324a92bb6a98c700f79ff66fcb255dc8001e2ad61911ec26768f14f60`, and the
 body hash matches `metadata.version`. No publication or deployment is
 performed by this mirror commit.
+
+## 2026-09-25 — Scope the hosted key to public calls; reuse account idempotency keys
+
+Mirror skill `1ea09c29c742`, approved by the user after Greptile review of
+PR #15. The hosted step said every follow-up tool takes `tenant_id` and
+`coh_management_key`; that holds only without sign-in, and a signed-in agent
+following it could put the secret key into tool inputs retained in client
+history. It now says signed-in calls take only `tenant_id`. Account creation
+takes an `idempotency_key`, but the skill did not say to keep it; it now says
+the key is chosen once and reused for a retry after an unclear outcome,
+because a fresh key can create a second durable tenant. No other text changes.
+
+Both mirror files are byte-identical: 25,301 bytes, SHA-256
+`44967c6cf60c8ee43e923fbc467d362a2dd4c7dc0f7a93d8b48ed1a9579f8f2c`, and the
+body hash matches `metadata.version`. No publication or deployment is
+performed by this mirror commit.
