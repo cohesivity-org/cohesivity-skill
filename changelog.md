@@ -209,3 +209,20 @@ Both mirror files are byte-identical: 25,301 bytes, SHA-256
 `44967c6cf60c8ee43e923fbc467d362a2dd4c7dc0f7a93d8b48ed1a9579f8f2c`, and the
 body hash matches `metadata.version`. No publication or deployment is
 performed by this mirror commit.
+
+## 2026-09-25 — Say that a signed-in connection reaches only account tenants
+
+Mirror skill `23874a7d4101`, approved by the user after Greptile review of
+cohesivity PR #537. The hosted step said signed-in calls take only
+`tenant_id`, which reads as if any tenant works that way. A signed-in
+connection reaches only tenants the account created or owns, and its tool
+schemas take no management key, so a tenant created without sign-in
+(public `create_tenant` or the installer) returns `tenant_not_available`
+there. The skill now says such a tenant stays on key-based access (a public
+connection or direct HTTP) until the user claims it, after which the account
+manages it by `tenant_id`. No other text changes.
+
+Both mirror files are byte-identical: 25,773 bytes, SHA-256
+`4dab14ccb96f6f2ad3edcf5d24bddc489c1372a28c917ed84f0af641d9ea8232`, and the
+body hash matches `metadata.version`. No publication or deployment is
+performed by this mirror commit.
