@@ -241,3 +241,20 @@ Both mirror files are byte-identical: 25,773 bytes, SHA-256
 `558926d7d8b00abb91b957cc23beabb829f1f8da228984c1facc41d157ceacc5`, and the
 body hash matches `metadata.version`. No publication or deployment is
 performed by this mirror commit.
+
+## 2026-10-15 — Point the no-MCP fallback at initializer 0.9.3
+
+Mirror skill `9061ab1e993d`, a version-only edit approved by the user for
+COH-329. The no-MCP fallback runs `npx --yes @cohesivity/init@0.9.3` in both
+places, and the coordinated-release line names MCP server/plugin 5.0.5 and
+initializer 0.9.3. Plugin 5.0.4 made the local MCP advertise
+`provision_resource` as one flat object, so clients that read only top-level
+`properties` keep its arguments (cohesivity-org/cohesivity-plugin#28); 5.0.5
+bundles this skill. The fallback on 0.9.1 still installed plugin 5.0.2. Init
+0.9.2 is already published with plugin 5.0.2, so the next initializer is 0.9.3.
+No other text changes.
+
+Both mirror files are byte-identical: 25,773 bytes, SHA-256
+`803520edc2bcc05b58e281c8ad2b11d473aa3823479a7a1713eecde958f9cfab`, and the
+body hash matches `metadata.version`. No publication or deployment is
+performed by this mirror commit.
