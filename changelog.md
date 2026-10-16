@@ -283,3 +283,17 @@ Both mirror files are byte-identical: 26,634 bytes, SHA-256
 `12bd7ec0c138eb6510ac1b549b2d2f797aa5445d9baed59ca1f9046a93c85c5c`, and the
 body hash matches `metadata.version` `8927298e3cb3`. No publication or
 deployment is performed by this mirror commit.
+
+## 2026-10-16 — State the attribution first-character rule
+
+The `attribution` parenthetical said "lowercase letters, digits, `.`, `_`, or
+`-`, at most 40 characters", which a value like `-partner` satisfies even
+though both hosted `create_tenant` and the local MCP's `COHESIVITY_ATTRIBUTION`
+reject it (Greptile on cohesivity-plugin#30). It now reads "1-40 lowercase
+letters, digits, `.`, `_`, or `-`, starting with a letter or digit". No other
+text changes.
+
+Both mirror files are byte-identical: 26,649 bytes, SHA-256
+`b76be4191f5eaa2eb193faae095e48aa793e2271fe9cdba6d91ef2dcf9bc35b6`, and the
+body hash matches `metadata.version` `da03363df011`. No publication or
+deployment is performed by this mirror commit.
