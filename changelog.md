@@ -258,3 +258,28 @@ Both mirror files are byte-identical: 25,773 bytes, SHA-256
 `803520edc2bcc05b58e281c8ad2b11d473aa3823479a7a1713eecde958f9cfab`, and the
 body hash matches `metadata.version`. No publication or deployment is
 performed by this mirror commit.
+
+## 2026-10-16 — Describe the optional create_tenant attribution; point the fallback at initializer 0.9.4
+
+Hosted `create_tenant` now accepts an optional `attribution` string on both the
+public and signed-in paths, and the local MCP reads `COHESIVITY_ATTRIBUTION`
+from its environment instead. The "Public `create_tenant` takes only
+`confirmed: true`" line was no longer true. It now says `confirmed: true` is
+still required, `attribution` is optional and never replaces it, agents pass
+it only when an integration's instructions give a value, and the local MCP
+takes it from the environment. The signed-in sentence now says
+`idempotency_key` is required and `attribution` is optional.
+
+Three drift fixes in the same file:
+
+- The local `create_tenant` step names its required absolute `project_root`.
+- The tool list no longer says hosted public creation "reuses" a tenant,
+  because each public call creates a new one.
+- The coordinated-release line names plugin and local MCP server 5.1.0
+  (published as `@cohesivity/mcp` 0.3.0) and initializer 0.9.4, and both
+  installer commands pin `@cohesivity/init@0.9.4`.
+
+Both mirror files are byte-identical: 26,634 bytes, SHA-256
+`12bd7ec0c138eb6510ac1b549b2d2f797aa5445d9baed59ca1f9046a93c85c5c`, and the
+body hash matches `metadata.version` `8927298e3cb3`. No publication or
+deployment is performed by this mirror commit.
