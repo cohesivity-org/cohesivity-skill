@@ -326,3 +326,22 @@ Both mirror files are byte-identical: 26,605 bytes, SHA-256
 `9358d58a9d7432da36afc6a716b299899f35e9b562e7ed58ba099f33b832eba9`, and the
 body hash matches `metadata.version` `7fe8262e7600`. No publication or
 deployment is performed by this mirror commit.
+
+## 2026-11-18 — Say which offerings need a claimed tenant
+
+Seven more offerings become claimed-only alongside Inbox. After the resource
+list, one sentence names `openai-api`, `ai-gateway`, `deepgram-api`,
+`exa-api`, `openweather-api`, `google-geocoding-api`, `steel-browser`, and
+`inbox` as needing a claimed tenant, says ephemeral tenants get
+`403 tenant_must_be_claimed`, and tells the agent to offer `claim_tenant`
+before provisioning them. The Steel Browser paragraph now says it is
+available to every claimed tenant, drops "performs ephemeral identity
+admission" from the provisioning sentence, and drops the two sentences about
+the ephemeral exact-IP identity budget and its
+`browser_ephemeral_identity_usage_limit` remediation. The lifecycle line adds
+that ephemeral tenants have no access to those claimed-only offerings.
+
+Both mirror files are byte-identical: 26,524 bytes, SHA-256
+`9c408d62c8d270b1776c9dccb00951a3fb9ad1f098f0790c006d79225e3c9c78`, and the
+body hash matches `metadata.version` `19149335569c`. No publication or
+deployment is performed by this mirror commit.
