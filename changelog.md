@@ -297,3 +297,51 @@ Both mirror files are byte-identical: 26,649 bytes, SHA-256
 `b76be4191f5eaa2eb193faae095e48aa793e2271fe9cdba6d91ef2dcf9bc35b6`, and the
 body hash matches `metadata.version` `da03363df011`. No publication or
 deployment is performed by this mirror commit.
+
+## 2026-11-18 — Say Inbox needs a claimed tenant
+
+`cohesivity-org/cohesivity#571` makes the `inbox` offering claimed-only. The
+skill still said ephemeral tenants get the canonical address with five
+lifetime sends and one recipient per message. The Inbox sentence now says
+Inbox requires a claimed tenant, ephemeral tenants get
+`403 tenant_must_be_claimed` and should claim first, and claimed Inbox has
+monthly limits, the optional immutable `/api/vanity` identity, and the signed
+`message.received` webhook. No other text changes.
+
+Both mirror files are byte-identical: 26,605 bytes, SHA-256
+`b3044ff743686154751a5e206851504ba60b352d1d81360bed2f98581c218a8f`, and the
+body hash matches `metadata.version` `79ab7f370f1f`. Merging this to `main`
+releases it to the `skills` CLI channel, so merge only after #571 is deployed.
+No publication or deployment is performed by this mirror commit.
+
+## 2026-11-18 — Name plugin 5.1.1 and initializer 0.9.5
+
+The previous entry left the release lines naming the versions that shipped
+the old skill. Both no-MCP fallback commands now pin
+`@cohesivity/init@0.9.5`, and the coordinated-release line names plugin and
+local MCP server 5.1.1 and initializer 0.9.5. `@cohesivity/mcp` stays at
+0.3.0 because it is not republished. Only version numbers change.
+
+Both mirror files are byte-identical: 26,605 bytes, SHA-256
+`9358d58a9d7432da36afc6a716b299899f35e9b562e7ed58ba099f33b832eba9`, and the
+body hash matches `metadata.version` `7fe8262e7600`. No publication or
+deployment is performed by this mirror commit.
+
+## 2026-11-18 — Say which offerings need a claimed tenant
+
+Seven more offerings become claimed-only alongside Inbox. After the resource
+list, one sentence names `openai-api`, `ai-gateway`, `deepgram-api`,
+`exa-api`, `openweather-api`, `google-geocoding-api`, `steel-browser`, and
+`inbox` as needing a claimed tenant, says ephemeral tenants get
+`403 tenant_must_be_claimed`, and tells the agent to offer `claim_tenant`
+before provisioning them. The Steel Browser paragraph now says it is
+available to every claimed tenant, drops "performs ephemeral identity
+admission" from the provisioning sentence, and drops the two sentences about
+the ephemeral exact-IP identity budget and its
+`browser_ephemeral_identity_usage_limit` remediation. The lifecycle line adds
+that ephemeral tenants have no access to those claimed-only offerings.
+
+Both mirror files are byte-identical: 26,524 bytes, SHA-256
+`9c408d62c8d270b1776c9dccb00951a3fb9ad1f098f0790c006d79225e3c9c78`, and the
+body hash matches `metadata.version` `19149335569c`. No publication or
+deployment is performed by this mirror commit.
