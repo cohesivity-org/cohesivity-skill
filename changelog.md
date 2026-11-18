@@ -297,3 +297,19 @@ Both mirror files are byte-identical: 26,649 bytes, SHA-256
 `b76be4191f5eaa2eb193faae095e48aa793e2271fe9cdba6d91ef2dcf9bc35b6`, and the
 body hash matches `metadata.version` `da03363df011`. No publication or
 deployment is performed by this mirror commit.
+
+## 2026-11-18 — Say Inbox needs a claimed tenant
+
+`cohesivity-org/cohesivity#571` makes the `inbox` offering claimed-only. The
+skill still said ephemeral tenants get the canonical address with five
+lifetime sends and one recipient per message. The Inbox sentence now says
+Inbox requires a claimed tenant, ephemeral tenants get
+`403 tenant_must_be_claimed` and should claim first, and claimed Inbox has
+monthly limits, the optional immutable `/api/vanity` identity, and the signed
+`message.received` webhook. No other text changes.
+
+Both mirror files are byte-identical: 26,605 bytes, SHA-256
+`b3044ff743686154751a5e206851504ba60b352d1d81360bed2f98581c218a8f`, and the
+body hash matches `metadata.version` `79ab7f370f1f`. Merging this to `main`
+releases it to the `skills` CLI channel, so merge only after #571 is deployed.
+No publication or deployment is performed by this mirror commit.
