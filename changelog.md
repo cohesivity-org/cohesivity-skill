@@ -313,3 +313,16 @@ Both mirror files are byte-identical: 26,605 bytes, SHA-256
 body hash matches `metadata.version` `79ab7f370f1f`. Merging this to `main`
 releases it to the `skills` CLI channel, so merge only after #571 is deployed.
 No publication or deployment is performed by this mirror commit.
+
+## 2026-11-18 — Name plugin 5.1.1 and initializer 0.9.5
+
+The previous entry left the release lines naming the versions that shipped
+the old skill. Both no-MCP fallback commands now pin
+`@cohesivity/init@0.9.5`, and the coordinated-release line names plugin and
+local MCP server 5.1.1 and initializer 0.9.5. `@cohesivity/mcp` stays at
+0.3.0 because it is not republished. Only version numbers change.
+
+Both mirror files are byte-identical: 26,605 bytes, SHA-256
+`9358d58a9d7432da36afc6a716b299899f35e9b562e7ed58ba099f33b832eba9`, and the
+body hash matches `metadata.version` `7fe8262e7600`. No publication or
+deployment is performed by this mirror commit.
